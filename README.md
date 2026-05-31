@@ -10,6 +10,26 @@ Prime Property adalah platform web terintegrasi yang menggabungkan Landing Page 
 
 ---
 
+## 🌐 Live Demo & Informasi Hosting
+
+Aplikasi ini telah di-deploy secara langsung dan dapat diakses melalui tautan berikut:
+
+- **Halaman Publik (Landing Page)**: [https://agentprimeproperty.vercel.app/](https://agentprimeproperty.vercel.app/)
+- **Portal Agen / Login Admin**: [https://agentprimeproperty.vercel.app/agent/login](https://agentprimeproperty.vercel.app/agent/login)
+- **Repositori Source Code**: [https://github.com/restusatrio11/AgentProperty.git](https://github.com/restusatrio11/AgentProperty.git)
+- **Cabang Produksi (Production Branch)**: `main`
+- **Penyedia Hosting**: **Vercel**
+
+### 🔑 Kredensial Demo Akun Internal
+Untuk menguji coba fitur *Role-Based Access Control* (RBAC) pada portal agen internal, gunakan kredensial demo berikut:
+
+| Peran (Role) | Email Login | Kata Sandi (Password) |
+| :--- | :--- | :--- |
+| **Superadmin** *(Full CRUD + Kelola Admin)* | `superadmin@primeproperty.com` | `SuperadminPrime123!` |
+| **Admin** *(Read-Only + Lihat Testimoni)* | `admin@primeproperty.com` | `Admin123admin!` |
+
+---
+
 ## 🌟 Fitur Utama
 
 ### 🖥️ Halaman Publik (Landing Page)
