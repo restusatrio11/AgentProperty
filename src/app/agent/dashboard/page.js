@@ -254,7 +254,7 @@ function MultiSelectDropdown({ options, selectedValues = [], onChange, placehold
 export default function AgentDashboard() {
   const [mounted, setMounted] = useState(false);
   const [activeTab, setActiveTab] = useState("dashboard"); // dashboard, properti, audit, etc.
-  const [role, setRole] = useState("SUPERADMIN"); // SUPERADMIN or ADMIN
+  const [role, setRole] = useState("ADMIN"); // SUPERADMIN or ADMIN
 
   // Column visibility states
   const [showColumnSelector, setShowColumnSelector] = useState(false);

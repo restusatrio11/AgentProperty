@@ -247,6 +247,14 @@ export async function POST(request) {
         path: "/",
       });
 
+      response.cookies.set("user_role", user.role, {
+        httpOnly: false,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        maxAge: durationDays * 24 * 60 * 60,
+        path: "/",
+      });
+
       // Clear captcha cookie
       response.cookies.delete("captcha");
 

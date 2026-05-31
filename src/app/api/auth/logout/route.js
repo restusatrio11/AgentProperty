@@ -28,6 +28,14 @@ export async function POST(request) {
     path: "/",
   });
 
+  response.cookies.set("user_role", "", {
+    httpOnly: false,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    expires: new Date(0),
+    path: "/",
+  });
+
   return response;
 }
 
@@ -50,6 +58,14 @@ export async function GET(request) {
   
   response.cookies.set("session", "", {
     httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    expires: new Date(0),
+    path: "/",
+  });
+
+  response.cookies.set("user_role", "", {
+    httpOnly: false,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
     expires: new Date(0),
