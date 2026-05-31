@@ -1,0 +1,114 @@
+.floatingBtn {
+  position: fixed;
+  right: -48px; /* Nudged slightly more to the right */
+  top: 50%;
+  transform: translateY(-50%) rotate(-90deg);
+  background: var(--color-primary-black);
+  color: var(--color-accent-gold);
+  border: 1px solid var(--color-accent-gold);
+  padding: 12px 24px;
+  border-radius: 8px 8px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  z-index: 9999;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.floatingBtn:hover {
+  right: -40px; /* Adjusted hover position */
+  background: var(--color-accent-gold);
+  color: var(--color-primary-black);
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal {
+  background: white;
+  width: 100%;
+  max-width: 500px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow-xl);
+  animation: slideUp 0.3s ease-out;
+}
+
+.header {
+  padding: 20px 24px;
+  background: var(--color-primary-black);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: var(--color-accent-gold);
+}
+
+.closeBtn {
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.closeBtn:hover {
+  opacity: 1;
+}
+
+.form {
+  padding: 24px;
+}
+
+.ratingRow {
+  margin-bottom: 20px;
+}
+
+.ratingRow label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-gray-500);
+  margin-bottom: 8px;
+}
+
+.stars {
+  display: flex;
+  gap: 8px;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@media (max-width: 600px) {
+  .floatingBtn {
+    right: -40px;
+    padding: 8px 15px;
+    font-size: 12px;
+  }
+}

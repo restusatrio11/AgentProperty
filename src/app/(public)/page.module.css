@@ -1,0 +1,407 @@
+/* src/app/(public)/page.module.css */
+.hero {
+  background-color: var(--color-primary-black);
+  color: var(--color-neutral-white);
+  padding: var(--space-80) 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 2px solid var(--color-accent-gold);
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.heroBadge {
+  color: var(--color-accent-gold);
+  border: 1px solid var(--color-accent-gold);
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-full);
+  font-size: var(--font-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: var(--space-xl); /* Increased to 32px for more air */
+}
+
+.heroTitle {
+  font-size: var(--font-5xl);
+  font-weight: 800;
+  color: var(--color-neutral-white);
+  margin-top: var(--space-sm);
+  margin-bottom: var(--space-md);
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.heroTitleHighlight {
+  color: var(--color-accent-gold);
+}
+
+.heroDescription {
+  font-size: var(--font-lg);
+  color: var(--color-gray-400);
+  margin-bottom: var(--space-lg);
+  line-height: 1.6;
+}
+
+.section {
+  padding: var(--space-80) 0;
+  background-color: var(--color-neutral-white);
+}
+
+.sectionGray {
+  padding: var(--space-80) 0;
+  background-color: var(--color-soft-gray);
+}
+
+.sectionTitleContainer {
+  text-align: center;
+  margin-bottom: var(--space-48);
+}
+
+.sectionTitle {
+  font-size: var(--font-3xl);
+  margin-bottom: var(--space-xs);
+  text-transform: uppercase;
+}
+
+.sectionSubtitle {
+  font-size: var(--font-xs);
+  color: var(--color-accent-gold);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
+  margin-bottom: var(--space-xs);
+  display: block;
+}
+
+.sectionDescription {
+  font-size: var(--font-sm);
+  color: var(--color-gray-500);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Property Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: var(--space-xl);
+  margin-top: var(--space-lg);
+}
+
+.card {
+  background-color: var(--color-soft-gray);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  border: 1px solid var(--color-gray-200);
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--color-accent-gold-border);
+}
+
+.cardBody {
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-sm);
+  gap: var(--space-sm);
+}
+
+.cardTitle {
+  font-size: var(--font-md);
+  font-weight: 700;
+  color: var(--color-primary-black);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.price {
+  font-size: var(--font-lg);
+  font-weight: 800;
+  color: var(--color-primary-black);
+  margin-bottom: var(--space-md);
+}
+
+.badgeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-md);
+}
+
+.badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px var(--space-sm);
+  border-radius: var(--radius-xs);
+  text-transform: uppercase;
+}
+
+.badgeVilla {
+  background-color: var(--color-accent-gold-light);
+  color: var(--color-accent-gold-hover);
+  border: 1px solid var(--color-accent-gold-border);
+}
+
+.badgeRuko {
+  background-color: var(--color-gray-100);
+  color: var(--color-gray-800);
+  border: 1px solid var(--color-gray-300);
+}
+
+.badgeInStock {
+  background-color: var(--color-success-bg);
+  color: var(--color-success);
+  border: 1px solid var(--color-success-border);
+}
+
+.badgeSoldOut {
+  background-color: var(--color-danger-bg);
+  color: var(--color-danger);
+  border: 1px solid var(--color-danger-border);
+}
+
+.badgeSiapHuni {
+  background-color: var(--color-warning-bg);
+  color: var(--color-warning);
+  border: 1px solid var(--color-warning-border);
+}
+
+.badgeSiapKosong {
+  background-color: #f3e5f5;
+  color: #7b1fa2;
+  border: 1px solid #e1bee7;
+}
+
+.badgeSiapHuniRenov {
+  background-color: #e2f1f8;
+  color: #0288d1;
+  border: 1px solid #b3e5fc;
+}
+
+.specs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-gray-200);
+  margin-top: auto;
+}
+
+.specItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--font-xs);
+  color: var(--color-gray-600);
+}
+
+.specIcon {
+  color: var(--color-accent-gold);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+/* Value Props / Why Us */
+.featuresGrid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: var(--space-xl);
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+@media (min-width: 641px) {
+  .featuresGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.featureCard {
+  background-color: var(--color-neutral-white);
+  padding: var(--space-xl);
+  border-radius: var(--radius-md);
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-gray-100);
+  transition: all var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.featureCard:hover {
+  transform: translateY(-5px);
+  border-color: var(--color-accent-gold-border);
+  box-shadow: var(--shadow-lg);
+}
+
+.featureIcon {
+  width: 64px;
+  height: 64px;
+  background-color: var(--color-soft-gray);
+  color: var(--color-accent-gold);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-lg);
+  border: 1px solid var(--color-gray-200);
+  transition: all var(--transition-normal);
+}
+
+.featureCard:hover .featureIcon {
+  background-color: var(--color-accent-gold);
+  color: var(--color-primary-black);
+  border-color: var(--color-accent-gold);
+}
+
+.featureTitle {
+  font-size: var(--font-lg);
+  font-weight: 700;
+  margin-bottom: var(--space-sm);
+}
+
+.featureDescription {
+  font-size: var(--font-sm);
+  color: var(--color-gray-600);
+  line-height: 1.6;
+}
+
+/* Hero Background Slider */
+.heroSlider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.heroSlide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.heroOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 100%);
+  z-index: 2;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 10;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Loading Skeleton */
+.loadingContainer {
+  width: 100%;
+  min-height: 100vh;
+  padding-bottom: 100px;
+}
+
+.skeletonHero {
+  height: 80vh;
+  background: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.skeletonTextLarge {
+  width: 60%;
+  height: 60px;
+  background: #e0e0e0;
+  border-radius: 8px;
+  animation: pulse 1.5s infinite;
+}
+
+.skeletonTextMedium {
+  width: 40%;
+  height: 24px;
+  background: #e0e0e0;
+  border-radius: 4px;
+  animation: pulse 1.5s infinite;
+}
+
+.skeletonButton {
+  width: 200px;
+  height: 50px;
+  background: #e0e0e0;
+  border-radius: 8px;
+  animation: pulse 1.5s infinite;
+}
+
+.skeletonTitle {
+  width: 300px;
+  height: 40px;
+  background: #f0f0f0;
+  margin: 0 auto 40px;
+  border-radius: 4px;
+}
+
+.skeletonGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.skeletonCard {
+  height: 400px;
+  background: #f0f0f0;
+  border-radius: 12px;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+@media (max-width: 768px) {
+  .skeletonGrid {
+    grid-template-columns: 1fr;
+  }
+}

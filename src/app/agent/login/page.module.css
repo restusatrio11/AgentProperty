@@ -1,0 +1,388 @@
+/* src/app/agent/login/page.module.css */
+
+.pageWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--color-primary-black);
+  padding: var(--space-md);
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated Background Decorations */
+.backgroundDecor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.houseElement {
+  position: absolute;
+  color: rgba(201, 169, 97, 0.08); /* Faint gold */
+  fill: currentColor;
+  animation: float 20s ease-in-out infinite;
+}
+
+.houseElement:nth-child(even) {
+  animation-duration: 25s;
+  animation-delay: -5s;
+}
+
+.houseElement:nth-child(3n) {
+  animation-duration: 30s;
+  animation-delay: -10s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-20px) rotate(2deg);
+  }
+  66% {
+    transform: translateY(10px) rotate(-1deg);
+  }
+}
+
+.loginCard {
+  width: 100%;
+  max-width: 420px;
+  background-color: #242424;
+  border: 1px solid rgba(201, 169, 97, 0.2);
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  padding: var(--space-xl);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  transition: transform var(--transition-normal);
+  position: relative;
+  z-index: 10;
+  backdrop-filter: blur(4px);
+}
+
+@media (max-width: 640px) {
+  .loginCard {
+    padding: var(--space-lg) var(--space-md);
+  }
+}
+
+.brandHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-xs);
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+  color: var(--color-neutral-white);
+  text-decoration: none;
+}
+
+.logoWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  position: relative;
+}
+
+.logoImage {
+  object-fit: contain;
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.2))
+          drop-shadow(0 0 6px rgba(201, 169, 97, 0.5));
+}
+
+.logoText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  align-items: center;
+  text-align: center;
+}
+
+.logoTextMain {
+  font-size: var(--font-xl);
+  font-weight: 800;
+  color: var(--color-neutral-white);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  margin-right: -6px;
+}
+
+.logoTextSub {
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: var(--color-accent-gold);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.portalTitle {
+  font-size: var(--font-xl);
+  font-weight: 700;
+  color: var(--color-neutral-white);
+  margin-bottom: 0;
+}
+
+.portalSubtitle {
+  font-size: var(--font-sm);
+  color: var(--color-gray-400);
+  margin-bottom: 0;
+}
+
+/* Alert Messages */
+.alert {
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-sm);
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+
+.alertWarning {
+  background-color: rgba(179, 58, 58, 0.15);
+  border: 1px solid var(--color-danger);
+  color: #ff8a8a;
+}
+
+.alertDanger {
+  background-color: rgba(179, 58, 58, 0.2);
+  border: 1px solid var(--color-danger);
+  color: #ff6b6b;
+}
+
+.alertTitle {
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.alertContent {
+  margin-bottom: 0;
+  color: inherit;
+}
+
+/* Login Form */
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.passwordFieldWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.passwordToggle {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: var(--color-gray-400);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  transition: color var(--transition-fast);
+  z-index: 5;
+}
+
+.passwordToggle:hover {
+  color: var(--color-accent-gold);
+}
+
+.inputLabel {
+  font-size: var(--font-xs);
+  font-weight: 600;
+  color: var(--color-accent-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.75px;
+}
+
+.inputField {
+  width: 100%;
+  padding: 12px var(--space-md);
+  background-color: var(--color-primary-black);
+  border: 1px solid #3a3a3a;
+  border-radius: var(--radius-sm);
+  color: var(--color-neutral-white);
+  font-family: inherit;
+  font-size: var(--font-md);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  box-sizing: border-box;
+}
+
+.inputField:focus {
+  outline: none;
+  border-color: var(--color-accent-gold);
+  box-shadow: 0 0 0 2px rgba(201, 169, 97, 0.2);
+}
+
+.inputField:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Captcha Styling */
+.captchaGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  background-color: rgba(255, 255, 255, 0.03);
+  padding: var(--space-sm);
+  border-radius: var(--radius-sm);
+  border: 1px dashed #3a3a3a;
+}
+
+.captchaHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.captchaWrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.captchaImage {
+  background-color: #f3f4f6;
+  border-radius: 4px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.refreshButton {
+  background: none;
+  border: none;
+  color: var(--color-accent-gold);
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.refreshButton:hover {
+  transform: rotate(90deg);
+}
+
+/* Remember Me */
+.optionsGroup {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.rememberMe {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--font-xs);
+  color: var(--color-gray-400);
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--color-accent-gold);
+}
+
+.submitButton {
+  width: 100%;
+  padding: 14px;
+  background-color: var(--color-accent-gold);
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--color-primary-black);
+  font-family: inherit;
+  font-size: var(--font-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--transition-normal), opacity var(--transition-fast);
+  margin-top: var(--space-sm);
+}
+
+.submitButton:hover:not(:disabled) {
+  background-color: var(--color-accent-gold-hover);
+}
+
+.submitButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Spinner */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(26, 26, 26, 0.3);
+  border-radius: 50%;
+  border-top-color: var(--color-primary-black);
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Card Footer */
+.cardFooter {
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: var(--space-md);
+  margin-top: var(--space-xs);
+}
+
+.backLink {
+  color: var(--color-gray-400);
+  font-size: var(--font-xs);
+  transition: color var(--transition-fast);
+}
+
+.backLink:hover {
+  color: var(--color-accent-gold);
+}

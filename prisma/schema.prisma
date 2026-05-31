@@ -1,0 +1,138 @@
+// This is your Prisma schema file for Supabase PostgreSQL
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// 1. Model Pengguna (Admin & Superadmin)
+model User {
+  id                    String      @id @default(uuid())
+  nama                  String?
+  email                 String      @unique
+  passwordHash          String
+  role                  String      // "SUPERADMIN" | "ADMIN"
+  isActive              Boolean     @default(true)
+  failedLoginAttempts   Int         @default(0)
+  lockoutUntil          DateTime?
+  requiresPasswordReset Boolean     @default(true)
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @updatedAt
+
+  // Relasi
+  propertiesCreated     Property[]  @relation("PropertyCreator")
+  auditLogs             AuditLog[]
+  sessions              Session[]
+
+  @@map("users")
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token        String   @unique
+  ipAddress    String?
+  userAgent    String?
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+
+  @@map("sessions")
+}
+
+
+// 2. Model Listing Properti
+model Property {
+  id             String    @id @default(uuid())
+  namaProperti   String    @map("nama_property")
+  groupName      String?   @map("group")
+  lebar          Decimal   @db.Decimal(10, 2)
+  panjang        Decimal   @db.Decimal(10, 2)
+  hadap          String    // JSON array string sorted, misal: '["TIMUR", "UTARA"]'
+  tipe           String    // "RUKO" | "VILLA"
+  tingkat        Decimal   @db.Decimal(3, 1)
+  price          BigInt    
+  carport        Boolean   @default(false)
+  status         String    @default("in_stock") // "in_stock" | "sold_out"
+  siap           String    // "siap_huni" | "siap_kosong" | "siap_huni_renovasi"
+  mapsLink       String?   @map("maps_link")
+  lat            Float?    @default(3.5952) // Default Medan Lat
+  lng            Float?    @default(98.6722) // Default Medan Lng
+  kawasan        String    // JSON array string kawasan
+  unit           String?   
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+  deletedAt      DateTime? @map("deleted_at") // Soft Delete
+
+  // Relasi ke Pembuat
+  createdById    String    @map("created_by")
+  createdBy      User      @relation("PropertyCreator", fields: [createdById], references: [id])
+
+  @@map("properties")
+}
+
+// 3. Model Log Audit Sistem (Append-Only)
+model AuditLog {
+  id            String   @id @default(uuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  actionType    String   
+  entityName    String   
+  entityId      String   
+  changeSummary String   @db.Text 
+  ipAddress     String
+  createdAt     DateTime @default(now())
+
+  @@map("audit_logs")
+}
+
+// 4. Model Penyimpanan Formulir Kontak
+model ContactSubmission {
+  id          String   @id @default(uuid())
+  nama        String
+  email       String
+  hp          String   
+  pesan       String
+  status      String   @default("UNREAD") 
+  createdAt   DateTime @default(now())
+
+  @@map("contact_submissions")
+}
+
+// 5. Model Tracking Rate Limiting
+model RateLimit {
+  id           String   @id @default(uuid())
+  ipAddress    String
+  route        String   
+  count        Int      @default(1)
+  lastRequest  DateTime @default(now())
+
+  @@unique([ipAddress, route])
+  @@map("rate_limits")
+}
+
+// 6. Model Dynamic Role Permissions (RBAC Matrix)
+model RolePermission {
+  role            String @id // "SUPERADMIN" | "ADMIN"
+  permissionsJson String @db.Text // JSON string representing permissions
+
+  @@map("role_permissions")
+}
+
+// 7. Model Testimoni / Feedback Pelanggan
+model Testimonial {
+  id          String   @id @default(uuid())
+  nama        String
+  role        String?  // Misal: "Pembeli Villa Golden Hill"
+  content     String   @db.Text
+  stars       Int      @default(5)
+  isApproved  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("testimonials")
+}

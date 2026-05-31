@@ -1,0 +1,201 @@
+                          <button
+                            className={admin.isActive ? styles.adminActionBtnDanger : styles.adminActionBtn}
+                            onClick={() => handleToggleAdminStatus(admin.id, admin.isActive)}
+                            title={admin.isActive ? "Disable Admin" : "Enable Admin"}
+                            style={{ margin: 0 }}
+                          >
+                            {admin.isActive ? "Disable" : "Enable"}
+                          </button>
+                          <button
+                            className={styles.adminActionBtnSecondary}
+                            onClick={() => {
+                              setResetAdminId(admin.id);
+                              setNewAdminPassword("");
+                              setResetSuccessMessage("");
+                              setIsResetPasswordOpen(true);
+                            }}
+                            title="Reset Password"
+                            style={{ margin: 0 }}
+                          >
+                            Reset Password
+                          </button>
+                          <button
+                            type="button"
+                            className={`${styles.tableActionBtn} ${styles.tableActionBtnEdit}`}
+                            onClick={() => openEditFormForAdmin(admin)}
+                            title="Edit Detail Admin"
+                          >
+                            <Pencil size={14} />
+                          </button>
+                          <button
+                            type="button"
+                            className={`${styles.tableActionBtn} ${styles.tableActionBtnDelete}`}
+                            onClick={() => openDeleteConfirmationForAdmin(admin)}
+                            title="Hapus Admin Permanen"
+                          >
+                            <Trash2 size={14} />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
+
+            {sortedAdmins.length > 0 && (
+              <div className={styles.customTablePagination}>
+                <div className={styles.paginationInfo}>
+                  Menampilkan <strong>{Math.min((adminCurrentPage - 1) * adminPageSize + 1, sortedAdmins.length)}</strong> - <strong>{Math.min(adminCurrentPage * adminPageSize, sortedAdmins.length)}</strong> dari <strong>{sortedAdmins.length}</strong> admin
+                </div>
+                
+                <div className={styles.paginationControls}>
+                  <div className={styles.pageSizeSelectWrapper}>
+                    <span>Tampilkan:</span>
+                    <select
+                      className={styles.paginationPageSizeSelect}
+                      value={adminPageSize}
+                      onChange={(e) => {
+                        setAdminPageSize(Number(e.target.value));
+                        setAdminCurrentPage(1);
+                      }}
+                    >
+                      {[10, 25, 50, 100].map(size => (
+                        <option key={size} value={size}>{size}</option>
+                      ))}
+                    </select>
+                  </div>
+                  
+                  <div className={styles.paginationPages}>
+                    <button
+                      type="button"
+                      className={styles.paginationBtn}
+                      disabled={adminCurrentPage === 1}
+                      onClick={() => setAdminCurrentPage(1)}
+                    >
+                      «
+                    </button>
+                    <button
+                      type="button"
+                      className={styles.paginationBtn}
+                      disabled={adminCurrentPage === 1}
+                      onClick={() => setAdminCurrentPage(prev => Math.max(prev - 1, 1))}
+                    >
+                      ‹
+                    </button>
+                    
+                    {Array.from({ length: adminTotalPages }, (_, idx) => idx + 1)
+                      .filter(page => {
+                        return page === 1 || page === adminTotalPages || Math.abs(page - adminCurrentPage) <= 1;
+                      })
+                      .map((page, idx, arr) => {
+                        const isPrevPageDotted = idx > 0 && page - arr[idx - 1] > 1;
+                        return (
+                          <span key={page} style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                            {isPrevPageDotted && <span className={styles.paginationEllipsis}>...</span>}
+                            <button
+                              type="button"
+                              className={`${styles.paginationBtn} ${adminCurrentPage === page ? styles.paginationBtnActive : ""}`}
+                              onClick={() => setAdminCurrentPage(page)}
+                            >
+                              {page}
+                            </button>
+                          </span>
+                        );
+                      })}
+                    
+                    <button
+                      type="button"
+                      className={styles.paginationBtn}
+                      disabled={adminCurrentPage === adminTotalPages}
+                      onClick={() => setAdminCurrentPage(prev => Math.min(prev + 1, adminTotalPages))}
+                    >
+                      ›
+                    </button>
+                    <button
+                      type="button"
+                      className={styles.paginationBtn}
+                      disabled={adminCurrentPage === adminTotalPages}
+                      onClick={() => setAdminCurrentPage(adminTotalPages)}
+                    >
+                      »
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+        {/* Tab 6: Otorisasi (RBAC) */}
+        {activeTab === "rbac" && hasPermission(role, RESOURCES.USERS, ACTIONS.MANAGE) && (
+          <div>
+            <div className={styles.pageHeader}>
+              <h1 className={styles.pageTitle}>Matriks Otorisasi (RBAC)</h1>
+              <button 
+                className={styles.addBtn}
+                disabled={matrixSaving || !permissionsMatrix}
+                onClick={handleSavePermissionsMatrix}
+              >
+                <Save size={16} style={{ marginRight: "6px" }} /> {matrixSaving ? "Menyimpan..." : "Simpan Perubahan"}
+              </button>
+            </div>
+            <p style={{ fontSize: "14px", color: "#666", margin: "-12px 0 20px 0" }}>
+              Kelola izin akses role secara dinamis. Centang untuk mengizinkan role melakukan tindakan pada modul terkait.
+            </p>
+
+            {/* Filters & Search Control Bar */}
+            <div className={styles.filterCard} style={{ marginBottom: "16px", display: "flex", gap: "12px", flexWrap: "wrap", alignItems: "center", padding: "16px" }}>
+              <div style={{ flex: 1, minWidth: "200px" }}>
+                <input
+                  type="text"
+                  placeholder="Cari modul..."
+                  className={styles.filterInput}
+                  style={{ width: "100%" }}
+                  value={rbacSearch}
+                  onChange={(e) => setRbacSearch(e.target.value)}
+                />
+              </div>
+
+              {rbacSearch && (
+                <button
+                  className={styles.btnCancel}
+                  style={{ padding: "8px 16px" }}
+                  onClick={() => setRbacSearch("")}
+                >
+                  Reset
+                </button>
+              )}
+            </div>
+
+            <div className={styles.customTableWrapper}>
+              {matrixLoading || !permissionsMatrix ? (
+                <div style={{ padding: "40px", textAlign: "center", color: "#666" }}>
+                  Memuat matriks otorisasi...
+                </div>
+              ) : sortedRbacResources.length === 0 ? (
+                <div className={styles.noLogs}>
+                  Tidak ada modul otorisasi terdaftar atau cocok dengan pencarian.
+                </div>
+              ) : (
+                <table className={styles.customTable}>
+                  <thead>
+                    <tr>
+                      <th onClick={handleRbacSort} className={styles.sortHeader} style={{ textAlign: "left" }}>
+                        Modul & Fitur {renderRbacSortIcon()}
+                      </th>
+                      <th>Aksi / Tindakan</th>
+                      <th style={{ textAlign: "center" }}>👑 Superadmin</th>
+                      <th style={{ textAlign: "center" }}>🧑‍💼 Admin</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {sortedRbacResources.map((resource) => {
+                      // Filter actions applicable to this resource to determine rowspan
+                      const validActions = matrixMetadata.actions.filter(action => {
+                        if (resource.name === "properties" && action.name === "manage") return false;
+                        if (resource.name === "audit_logs" && action.name !== "read") return false;
+                        return true;
+                      });
+
+                      return validActions.map((action, actionIdx) => {
+                        const superadminHas = permissionsMatrix.SUPERADMIN?.[resource.name]?.includes(action.name) || false;

@@ -1,0 +1,405 @@
+/* src/app/(public)/tentang-kami/page.module.css */
+.container {
+  max-width: var(--max-width-content);
+  margin: 0 auto;
+  padding: var(--space-64) var(--space-lg);
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: var(--space-48);
+}
+
+.title {
+  font-size: var(--font-4xl);
+  margin-bottom: var(--space-sm);
+  text-transform: uppercase;
+}
+
+.subtitle {
+  font-size: var(--font-xs);
+  color: var(--color-accent-gold);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
+  margin-bottom: var(--space-xs);
+  display: block;
+}
+
+.introSection {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: var(--space-xxl);
+  align-items: stretch;
+  margin-bottom: var(--space-64);
+}
+
+@media (max-width: 1024px) {
+  .introSection {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+}
+
+.introText {
+  font-size: var(--font-md);
+  color: var(--color-gray-700);
+  line-height: 1.8;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.introText p {
+  margin-bottom: var(--space-md);
+}
+
+.introVisual {
+  background-color: var(--color-primary-black);
+  color: var(--color-neutral-white);
+  padding: var(--space-xl);
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--color-accent-gold);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 250px;
+}
+
+.quote {
+  font-size: var(--font-lg);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.6;
+  margin-bottom: var(--space-md);
+  color: var(--color-gray-100);
+}
+
+.quoteAuthor {
+  font-size: var(--font-sm);
+  font-weight: 700;
+  color: var(--color-accent-gold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.quoteTitle {
+  font-size: var(--font-xs);
+  color: var(--color-gray-400);
+}
+
+/* Stats Section */
+.statsSection {
+  background: var(--color-primary-black);
+  color: white;
+  padding: var(--space-64) 0;
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-64);
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-xl);
+  text-align: center;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.statNumber {
+  font-size: var(--font-4xl);
+  font-weight: 800;
+  color: var(--color-accent-gold);
+  margin-bottom: var(--space-xs);
+}
+
+.statLabel {
+  font-size: var(--font-sm);
+  color: var(--color-gray-400);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Vision & Mission Section */
+.visionMission {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  margin-bottom: var(--space-64);
+  background-color: var(--color-soft-gray);
+  padding: var(--space-xl);
+  border-radius: var(--radius-md);
+}
+
+@media (max-width: 768px) {
+  .visionMission {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+}
+
+.box {
+  background-color: var(--color-neutral-white);
+  padding: var(--space-xl);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-gray-200);
+}
+
+.boxTitle {
+  font-size: var(--font-xl);
+  color: var(--color-primary-black);
+  margin-bottom: var(--space-md);
+  border-bottom: 2px solid var(--color-accent-gold);
+  padding-bottom: var(--space-xs);
+  display: inline-block;
+  text-transform: uppercase;
+}
+
+.list {
+  padding-left: var(--space-lg);
+  color: var(--color-gray-700);
+}
+
+.listItem {
+  margin-bottom: var(--space-sm);
+  line-height: 1.6;
+}
+
+/* Team Section */
+.teamSection {
+  margin-bottom: var(--space-80);
+  text-align: center;
+}
+
+.teamTitle {
+  font-size: var(--font-3xl);
+  margin-bottom: var(--space-xl);
+  text-transform: uppercase;
+}
+
+.teamGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-xl);
+}
+
+.teamCard {
+  background: white;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-normal);
+  border: 1px solid var(--color-gray-200);
+}
+
+.teamCard:hover {
+  transform: translateY(-10px);
+}
+
+.teamImage {
+  width: 100%;
+  height: 300px;
+  background-color: var(--color-gray-200);
+  background-size: cover;
+  background-position: center;
+}
+
+.teamInfo {
+  padding: var(--space-lg);
+}
+
+.memberName {
+  font-size: var(--font-lg);
+  font-weight: 700;
+  margin-bottom: var(--space-xs);
+  color: var(--color-primary-black);
+}
+
+.memberRole {
+  font-size: var(--font-sm);
+  color: var(--color-accent-gold);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Timeline Section */
+.timelineSection {
+  margin-bottom: var(--space-80);
+}
+
+.timelineTitle {
+  font-size: var(--font-2xl);
+  text-align: center;
+  margin-bottom: var(--space-xl);
+  text-transform: uppercase;
+}
+
+.timeline {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.timeline::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  background-color: var(--color-gray-200);
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  margin-left: -1px;
+}
+
+.timelineItem {
+  padding: 10px 40px;
+  position: relative;
+  background-color: inherit;
+  width: 50%;
+}
+
+.timelineItem::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  right: -8px;
+  background-color: var(--color-accent-gold);
+  border: 4px solid var(--color-neutral-white);
+  top: 15px;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.left {
+  left: 0;
+}
+
+.right {
+  left: 50%;
+}
+
+.right::after {
+  left: -8px;
+}
+
+.timelineContent {
+  padding: 20px 30px;
+  background-color: var(--color-soft-gray);
+  position: relative;
+  border-radius: 6px;
+}
+
+.timelineYear {
+  font-weight: 800;
+  color: var(--color-accent-gold);
+  font-size: var(--font-lg);
+  margin-bottom: 5px;
+  display: block;
+}
+
+@media (max-width: 600px) {
+  .timeline::after {
+    left: 31px;
+  }
+  .timelineItem {
+    width: 100%;
+    padding-left: 70px;
+    padding-right: 25px;
+  }
+  .timelineItem::after {
+    left: 23px;
+  }
+  .right {
+    left: 0%;
+  }
+}
+
+/* Partners Section */
+.partnersSection {
+  text-align: center;
+  margin-bottom: var(--space-64);
+  padding-top: var(--space-xxl);
+  border-top: 1px solid var(--color-gray-200);
+}
+
+.partnersGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-xxl);
+  opacity: 0.6;
+  filter: grayscale(1);
+  transition: all var(--transition-normal);
+}
+
+.partnersGrid:hover {
+  opacity: 1;
+  filter: grayscale(0);
+}
+
+.partnerLogo {
+  font-weight: 800;
+  font-size: var(--font-xl);
+  color: var(--color-gray-400);
+}
+
+/* Corporate Values Section */
+.valuesSection {
+  text-align: center;
+  margin-bottom: var(--space-80);
+}
+
+.valuesTitle {
+  font-size: var(--font-2xl);
+  margin-bottom: var(--space-xl);
+  text-transform: uppercase;
+}
+
+.valuesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-lg);
+}
+
+.valueCard {
+  background-color: var(--color-neutral-white);
+  padding: var(--space-xl);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-gray-200);
+  transition: all var(--transition-normal);
+}
+
+.valueCard:hover {
+  border-color: var(--color-accent-gold);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.valueNumber {
+  font-size: var(--font-3xl);
+  font-weight: 800;
+  color: var(--color-accent-gold);
+  margin-bottom: var(--space-xs);
+}
+
+.valueName {
+  font-size: var(--font-md);
+  font-weight: 700;
+  margin-bottom: var(--space-sm);
+  color: var(--color-primary-black);
+  text-transform: uppercase;
+}
+
+.valueDesc {
+  font-size: var(--font-sm);
+  color: var(--color-gray-600);
+  line-height: 1.6;
+}

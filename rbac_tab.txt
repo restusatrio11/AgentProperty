@@ -1,0 +1,136 @@
+        {activeTab === "rbac" && hasPermission(role, RESOURCES.USERS, ACTIONS.MANAGE) && (
+          <div>
+            <div className={styles.pageHeader}>
+              <h1 className={styles.pageTitle}>Matriks Otorisasi (RBAC)</h1>
+              <button 
+                className={styles.addBtn}
+                disabled={matrixSaving || !permissionsMatrix}
+                onClick={handleSavePermissionsMatrix}
+              >
+                <Save size={16} style={{ marginRight: "6px" }} /> {matrixSaving ? "Menyimpan..." : "Simpan Perubahan"}
+              </button>
+            </div>
+            <p style={{ fontSize: "14px", color: "#666", margin: "-12px 0 20px 0" }}>
+              Kelola izin akses role secara dinamis. Centang untuk mengizinkan role melakukan tindakan pada modul terkait.
+            </p>
+
+            {/* Filters & Search Control Bar */}
+            <div className={styles.filterCard} style={{ marginBottom: "16px", display: "flex", gap: "12px", flexWrap: "wrap", alignItems: "center", padding: "16px" }}>
+              <div style={{ flex: 1, minWidth: "200px" }}>
+                <input
+                  type="text"
+                  placeholder="Cari modul..."
+                  className={styles.filterInput}
+                  style={{ width: "100%" }}
+                  value={rbacSearch}
+                  onChange={(e) => setRbacSearch(e.target.value)}
+                />
+              </div>
+
+              {rbacSearch && (
+                <button
+                  className={styles.btnCancel}
+                  style={{ padding: "8px 16px" }}
+                  onClick={() => setRbacSearch("")}
+                >
+                  Reset
+                </button>
+              )}
+            </div>
+
+            <div className={styles.customTableWrapper}>
+              {matrixLoading || !permissionsMatrix ? (
+                <div style={{ padding: "40px", textAlign: "center", color: "#666" }}>
+                  Memuat matriks otorisasi...
+                </div>
+              ) : sortedRbacResources.length === 0 ? (
+                <div className={styles.noLogs}>
+                  Tidak ada modul otorisasi terdaftar atau cocok dengan pencarian.
+                </div>
+              ) : (
+                <table className={styles.customTable}>
+                  <thead>
+                    <tr>
+                      <th onClick={handleRbacSort} className={styles.sortHeader} style={{ textAlign: "left" }}>
+                        Modul & Fitur {renderSortIcon("resource", "resource", rbacSortDirection)}
+                      </th>
+                      <th>Aksi / Tindakan</th>
+                      <th style={{ textAlign: "center" }}>👑 Superadmin</th>
+                      <th style={{ textAlign: "center" }}>🧑‍💼 Admin</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {sortedRbacResources.map((resource) => {
+                      // Filter actions applicable to this resource to determine rowspan
+                      const validActions = matrixMetadata.actions.filter(action => {
+                        if (resource.name === "properties" && action.name === "manage") return false;
+                        if (resource.name === "audit_logs" && action.name !== "read") return false;
+                        if (resource.name === "messages" && ["update", "manage"].includes(action.name)) return false;
+                        if (resource.name === "testimonials" && action.name === "manage") return false;
+                        return true;
+                      });
+
+                      return validActions.map((action, actionIdx) => {
+                        const superadminHas = permissionsMatrix.SUPERADMIN?.[resource.name]?.includes(action.name) || false;
+                        const adminHas = permissionsMatrix.ADMIN?.[resource.name]?.includes(action.name) || false;
+
+                        return (
+                          <tr key={`${resource.name}-${action.name}`} className={styles.customTableRow}>
+                            {actionIdx === 0 ? (
+                              <td 
+                                rowSpan={validActions.length}
+                                style={{ fontWeight: 700, color: "#1a1a1a", borderRight: "1px solid #eee", verticalAlign: "middle" }}
+                              >
+                                {resource.label}
+                              </td>
+                            ) : null}
+                            <td style={{ fontWeight: 600, color: "#444" }}>{action.label}</td>
+                            <td style={{ textAlign: "center" }}>
+                              <input
+                                type="checkbox"
+                                checked={superadminHas}
+                                className={styles.customTableCheckbox}
+                                onChange={() => handleMatrixCheckboxChange("SUPERADMIN", resource.name, action.name)}
+                              />
+                            </td>
+                            <td style={{ textAlign: "center" }}>
+                              <input
+                                type="checkbox"
+                                checked={adminHas}
+                                className={styles.customTableCheckbox}
+                                onChange={() => handleMatrixCheckboxChange("ADMIN", resource.name, action.name)}
+                              />
+                            </td>
+                          </tr>
+                        );
+                      });
+                    })}
+                  </tbody>
+                </table>
+              )}
+            </div>
+          </div>
+        )}
+      </main>
+    </div>
+
+      {/* CREATE & EDIT FORM MODAL */}
+      {isFormOpen && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <div className={styles.modalHeader}>
+              <h2 className={styles.modalTitle} style={{ color: "#ffffff", border: "none", margin: 0, padding: 0 }}>
+                {formMode === "create" ? (
+                  <span style={{ display: "flex", alignItems: "center", gap: "8px" }}><Plus size={18} /> Tambah Properti Baru</span>
+                ) : (
+                  <span style={{ display: "flex", alignItems: "center", gap: "8px" }}><Pencil size={18} /> Edit Detail Properti</span>
+                )}
+              </h2>
+              <button className={styles.iconBtn} onClick={() => setIsFormOpen(false)}><X size={16} /></button>
+            </div>
+            
+            <form onSubmit={handleFormSubmit}>
+              <div className={styles.modalBody}>
+                {/* Wizard Stepper Header */}
+                <div className={styles.wizardStepper}>
+                  <div className={`${styles.wizardStep} ${formStep === 1 ? styles.wizardStepActive : ""} ${formStep > 1 ? styles.wizardStepCompleted : ""}`} onClick={() => formStep > 1 && setFormStep(1)} style={{ cursor: formStep > 1 ? "pointer" : "default" }}>

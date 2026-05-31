@@ -1,0 +1,301 @@
+                <div className={styles.statsDetails}>
+                  <span className={styles.statsLabel}>Konversi Penjualan</span>
+                  <span className={styles.statsValue} title={`${conversionRate}%`}>{conversionRate}%</span>
+                  <span className={styles.statsSub}>
+                    {soldOutCount} dari {filteredDashboardProperties.length} terjual
+                  </span>
+                </div>
+              </div>
+
+              {/* Card 4: Inventory Velocity */}
+              <div className={styles.statsCard}>
+                <div className={styles.statsIcon} style={{ backgroundColor: "#ffebee", color: "#b33a3a" }}>
+                  <ShieldAlert size={22} />
+                </div>
+                <div className={styles.statsDetails}>
+                  <span className={styles.statsLabel}>Inventory Velocity</span>
+                  <span className={styles.statsValue} title={`${inventoryVelocity} Unit`}>{inventoryVelocity} Unit</span>
+                  <span className={styles.statsSub}>Ditambahkan dalam 30 hari terakhir</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Split Grid: Left Quick Actions/Health, Right Activity Trend Area Chart */}
+            <div className={styles.dashboardGrid}>
+              <div className={styles.leftControlPanel}>
+                {/* Quick Actions Panel */}
+                <div className={styles.quickActionsCard}>
+                  <h3 className={styles.cardHeader} style={{ fontSize: "14px", fontWeight: "700", borderBottom: "none", padding: "0 0 12px 0" }}>
+                    Tindakan Cepat / Quick Actions
+                  </h3>
+                  <div className={styles.quickActionsGrid}>
+                    <button className={styles.quickActionBtn} onClick={openCreateForm}>
+                      <Plus size={16} color="#c9a961" />
+                      Tambah Properti
+                    </button>
+                    <button className={styles.quickActionBtn} onClick={handleExportExcel}>
+                      <Download size={16} color="#c9a961" />
+                      Ekspor Excel
+                    </button>
+
+                  </div>
+                </div>
+
+                {/* Health Monitor Panel */}
+                <div className={styles.healthMonitorCard}>
+                  <h3 className={styles.cardHeader} style={{ fontSize: "14px", fontWeight: "700", borderBottom: "none", padding: "0 0 12px 0" }}>
+                    Monitor Kesehatan Data Properti
+                  </h3>
+                  <div className={styles.healthList}>
+                    {healthIssues.length === 0 ? (
+                      <div className={styles.healthEmpty}>
+                        🎉 Semua data lengkap & sehat!
+                      </div>
+                    ) : (
+                      healthIssues.map((issue, idx) => (
+                        <div
+                          key={idx}
+                          className={styles.healthItem}
+                          onClick={() => handleInspectProperty(issue.property)}
+                          title="Klik untuk memeriksa di tabel properti"
+                        >
+                          <span className={styles.healthItemTitle}>
+                            {issue.property.namaProperti}
+                          </span>
+                          <span className={styles.healthItemDetail}>
+                            <AlertTriangle size={12} /> {issue.issues}
+                          </span>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Area Chart: System Activity Trend */}
+              <div className={styles.dashboardCard}>
+                <div className={styles.cardHeader} style={{ borderBottom: "none", padding: "0 0 12px 0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span>Tren Aktivitas Sistem (7 Hari Terakhir)</span>
+                  <Activity size={16} color="#c9a961" />
+                </div>
+                <div style={{ minHeight: "280px" }}>
+                  <Chart
+                    options={activityChartOptions}
+                    series={[
+                      {
+                        name: "Aktivitas Log",
+                        data: systemActivityTrend.counts
+                      }
+                    ]}
+                    type="area"
+                    height="280"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Three Visualizers Bottom Row */}
+            <div className={styles.chartsRow}>
+              {/* Chart 1: Rasio Stock & Tipe Unit */}
+              <div className={styles.analyticsCard}>
+                <div className={styles.cardHeader} style={{ borderBottom: "none", padding: "0 0 12px 0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span>Rasio Stock & Tipe Unit</span>
+                  <Activity size={16} color="#c9a961" />
+                </div>
+                
+                <div style={{ display: "flex", justifyContent: "center", minHeight: "180px", alignItems: "center" }}>
+                  <Chart
+                    options={donutChartOptions}
+                    series={[inStockCount, soldOutCount]}
+                    type="donut"
+                    width="280"
+                  />
+                </div>
+
+                <div className={styles.typeDistribution} style={{ marginTop: "20px", paddingTop: "20px", borderTop: "1px solid #edf2f7" }}>
+                  <div className={styles.typeProgressLabels} style={{ display: "flex", justifyContent: "space-between", fontSize: "12px", fontWeight: "600", marginBottom: "6px" }}>
+                    <span>Ruko ({Math.round((filteredDashboardProperties.filter(p => p.tipe === "RUKO").length / (filteredDashboardProperties.length || 1)) * 100)}%)</span>
+                    <span>Villa ({Math.round((filteredDashboardProperties.filter(p => p.tipe === "VILLA").length / (filteredDashboardProperties.length || 1)) * 100)}%)</span>
+                  </div>
+                  <div className={styles.progressBarWrapper} style={{ height: "10px", backgroundColor: "#f0f0f0", borderRadius: "5px", display: "flex", overflow: "hidden" }}>
+                    <div 
+                      className={styles.progressBarFill} 
+                      style={{ 
+                        width: `${Math.round((filteredDashboardProperties.filter(p => p.tipe === "RUKO").length / (filteredDashboardProperties.length || 1)) * 100)}%`, 
+                        backgroundColor: "#c9a961" 
+                      }} 
+                    />
+                    <div 
+                      className={styles.progressBarFill} 
+                      style={{ 
+                        width: `${Math.round((filteredDashboardProperties.filter(p => p.tipe === "VILLA").length / (filteredDashboardProperties.length || 1)) * 100)}%`, 
+                        backgroundColor: "#111111" 
+                      }} 
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Chart 2: Price Distribution column chart */}
+              <div className={styles.analyticsCard}>
+                <div className={styles.cardHeader} style={{ borderBottom: "none", padding: "0 0 12px 0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span>Distribusi Harga Properti</span>
+                  <Building2 size={16} color="#c9a961" />
+                </div>
+                <div style={{ minHeight: "280px" }}>
+                  <Chart
+                    options={priceChartOptions}
+                    series={[
+                      {
+                        name: "Jumlah Unit",
+                        data: priceDistribution
+                      }
+                    ]}
+                    type="bar"
+                    height="280"
+                  />
+                </div>
+              </div>
+
+              {/* Chart 3: Geographic Asset Value Density horizontal bar chart */}
+              <div className={styles.analyticsCard}>
+                <div className={styles.cardHeader} style={{ borderBottom: "none", padding: "0 0 12px 0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span>Densitas Nilai Aset per Kawasan</span>
+                  <History size={16} color="#c9a961" />
+                </div>
+                <div style={{ minHeight: "280px" }}>
+                  <Chart
+                    options={geographicChartOptions}
+                    series={[
+                      {
+                        name: "Nilai Aset",
+                        data: geographicAssetDensity.map((item) => item.value)
+                      }
+                    ]}
+                    type="bar"
+                    height="280"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Tab Arsip: Properti Terhapus (Soft Delete) */}
+        {activeTab === "arsip" && (
+          <div>
+            <div className={styles.pageHeader}>
+              <h1 className={styles.pageTitle}>Arsip Properti (Terhapus)</h1>
+            </div>
+            <p style={{ fontSize: "14px", color: "#666", margin: "-12px 0 20px 0" }}>
+              Daftar properti yang telah dihapus (soft-delete). Superadmin dapat memulihkan properti ini ke database aktif.
+            </p>
+
+            <div className={styles.filterCard} style={{ padding: "0", overflow: "hidden" }}>
+              {loading ? (
+                <div style={{ padding: "40px", textAlign: "center", color: "#666" }}>Memuat data arsip...</div>
+              ) : properties.length === 0 ? (
+                <div style={{ padding: "40px", textAlign: "center", color: "#666" }}>Tidak ada properti di arsip.</div>
+              ) : (
+                <table className={styles.customTable}>
+                  <thead>
+                    <tr>
+                      <th style={{ width: "50px" }}>No</th>
+                      <th>Nama Properti</th>
+                      <th>Kawasan</th>
+                      <th>Tipe</th>
+                      <th>Harga</th>
+                      <th>Dihapus Pada</th>
+                      <th style={{ width: "120px", textAlign: "center" }}>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {properties.map((p, idx) => (
+                      <tr key={p.id} className={styles.customTableRow}>
+                        <td>{idx + 1}</td>
+                        <td style={{ fontWeight: "700" }}>{p.namaProperti}</td>
+                        <td>{p.kawasan?.join(", ") || "-"}</td>
+                        <td>{p.tipe}</td>
+                        <td style={{ color: "#c9a961", fontWeight: "700" }}>{formatRupiah(p.price)}</td>
+                        <td style={{ fontSize: "12px", color: "#666" }}>
+                          {p.deletedAt ? new Date(p.deletedAt).toLocaleString("id-ID") : "-"}
+                        </td>
+                        <td style={{ textAlign: "center" }}>
+                          <button
+                            className={styles.addBtn}
+                            style={{ padding: "6px 12px", fontSize: "11px", backgroundColor: "#1b8a5a" }}
+                            onClick={() => handleRestore(p.id, p.namaProperti)}
+                          >
+                            <History size={14} style={{ marginRight: "4px" }} /> Pulihkan
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Tab Dokumentasi: Panduan Superadmin */}
+        {activeTab === "docs" && (
+          <div>
+            <div className={styles.pageHeader}>
+              <h1 className={styles.pageTitle}>Panduan Penggunaan (Superadmin)</h1>
+            </div>
+            
+            <div className={styles.filterCard} style={{ lineHeight: "1.6", color: "#2d3748" }}>
+              <section style={{ marginBottom: "24px" }}>
+                <h2 style={{ fontSize: "18px", borderBottom: "2px solid #c9a961", display: "inline-block", marginBottom: "12px", color: "#1a1a1a" }}>1. Manajemen Properti</h2>
+                <p>Klik menu <strong>Daftar Properti</strong> untuk melihat seluruh basis data. Gunakan tombol <strong>+ TAMBAH PROPERTI</strong> untuk membuat entri baru.</p>
+                <ul style={{ paddingLeft: "20px", marginTop: "8px" }}>
+                  <li><strong>Import:</strong> Memungkinkan penambahan massal via file Excel.</li>
+                  <li><strong>Export:</strong> Mengunduh seluruh data properti ke format .xlsx.</li>
+                  <li><strong>Edit:</strong> Klik ikon pensil di baris tabel untuk mengubah data. Indikator <em>(Diubah)</em> akan muncul jika ada perubahan belum disimpan.</li>
+                  <li><strong>Hapus:</strong> Menggunakan sistem <em>Soft Delete</em>. Data tidak hilang permanen, tapi masuk ke menu Arsip.</li>
+                </ul>
+              </section>
+
+              <section style={{ marginBottom: "24px" }}>
+                <h2 style={{ fontSize: "18px", borderBottom: "2px solid #c9a961", display: "inline-block", marginBottom: "12px", color: "#1a1a1a" }}>2. Arsip & Pemulihan</h2>
+                <p>Menu <strong>Arsip Properti</strong> menampung data yang telah dihapus. Klik tombol <strong>PULIHKAN</strong> untuk mengembalikan properti ke status aktif.</p>
+              </section>
+
+              <section style={{ marginBottom: "24px" }}>
+                <h2 style={{ fontSize: "18px", borderBottom: "2px solid #c9a961", display: "inline-block", marginBottom: "12px", color: "#1a1a1a" }}>3. Keamanan & Sesi</h2>
+                <p>Gunakan menu <strong>Kelola Admin</strong> untuk membuat akun staf baru. Menu <strong>Sesi Aktif</strong> memungkinkan Superadmin memutus koneksi pengguna yang mencurigakan secara <em>real-time</em>.</p>
+              </section>
+
+              <section>
+                <h2 style={{ fontSize: "18px", borderBottom: "2px solid #c9a961", display: "inline-block", marginBottom: "12px", color: "#1a1a1a" }}>4. Audit Log</h2>
+                <p>Setiap mutasi data (Tambah/Edit/Hapus) dicatat dalam <strong>Audit Log</strong>, termasuk informasi waktu, pelaku, dan perubahan nilai yang dilakukan.</p>
+              </section>
+            </div>
+          </div>
+        )}
+        {/* Tab 3: Audit Logs */}
+        {activeTab === "audit" && (
+          <div>
+            <div className={styles.pageHeader}>
+              <h1 className={styles.pageTitle}>Log Audit Perubahan Sistem</h1>
+            </div>
+            
+            {!hasPermission(role, RESOURCES.AUDIT_LOGS, ACTIONS.READ) ? (
+              <div className={styles.filterCard} style={{ textAlign: "center", padding: "40px 20px" }}>
+                <div style={{ fontSize: "40px", marginBottom: "16px" }}>🔒</div>
+                <h3 style={{ margin: "0 0 8px 0", color: "#b33a3a" }}>Akses Terbatas (Superadmin Only)</h3>
+                <p style={{ margin: 0, color: "#666", fontSize: "14px" }}>
+                  Maaf, log audit sistem hanya dapat diakses oleh akun dengan peran Superadmin.
+                  Gunakan simulator di pojok kanan atas untuk mengubah peran.
+                </p>
+              </div>
+            ) : (
+              <div>
+                {/* Filters & Search Control Bar */}
+                <div className={styles.filterCard} style={{ marginBottom: "16px", display: "flex", gap: "12px", flexWrap: "wrap", alignItems: "center", padding: "16px" }}>
+                  <div style={{ flex: 1, minWidth: "200px" }}>
+                    <input
+                      type="text"
+                      placeholder="Cari email, perubahan, modul, IP..."
+                      className={styles.filterInput}

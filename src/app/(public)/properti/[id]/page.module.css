@@ -1,0 +1,246 @@
+/* src/app/(public)/properti/[id]/page.module.css */
+.container {
+  padding: 60px 0 100px 0;
+  min-height: 80vh;
+}
+
+.breadcrumb {
+  margin-bottom: 30px;
+  font-size: 14px;
+  color: #666;
+}
+
+.breadcrumb a {
+  color: #c9a961;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.topSection {
+  display: grid;
+  grid-template-columns: 1.8fr 1fr;
+  gap: 30px;
+}
+
+.mainInfo {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+  border: 1px solid #f0f0f0;
+}
+
+.svgHeader {
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  background: #f8fafc;
+}
+
+.detailsContent {
+  padding: 40px;
+}
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 800;
+  color: #1a1a1a;
+}
+
+.price {
+  font-size: 28px;
+  font-weight: 800;
+  color: #c9a961;
+  margin-bottom: 30px;
+}
+
+.badgeRow {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.badge {
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.badgeVilla { background: #fdfaf3; color: #c9a961; }
+.badgeRuko { background: #f7fafc; color: #4a5568; }
+.badgeInStock { background: #f0fff4; color: #38a169; }
+.badgeSoldOut { background: #fff5f5; color: #e53e3e; }
+
+.sectionTitle {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #f0f0f0;
+  color: #1a1a1a;
+}
+
+.specsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.specItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.specLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.specValue {
+  font-size: 16px;
+  font-weight: 700;
+  color: #2d3748;
+}
+
+/* Sidebar / Sidebar Card */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.contactCard {
+  background: #1a1a1a;
+  color: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+}
+
+.contactTitle {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.contactDesc {
+  font-size: 15px;
+  color: #aaa;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.waButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background-color: #25d366;
+  color: white;
+  padding: 18px;
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  width: 100%;
+  font-size: 16px;
+}
+
+.waButton:hover {
+  background-color: #1eb954;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2);
+}
+
+.locationSection {
+  margin-top: 20px;
+}
+
+.mapWrapper {
+  height: 450px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.mapPlaceholder {
+  background: #f7fafc;
+  height: 450px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #c9a961;
+  text-align: center;
+  padding: 20px;
+  border: 1px dashed #cbd5e0;
+}
+
+@media (max-width: 1024px) {
+  .topSection {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .title { font-size: 24px; }
+  .price { font-size: 22px; }
+  .detailsContent { padding: 25px; }
+  .mapWrapper, .mapPlaceholder { height: 300px; }
+}
+
+/* Additional Responsiveness for Detail */
+@media (max-width: 768px) {
+  .container {
+    padding: 30px 0;
+  }
+  .breadcrumb {
+    display: none; /* Hide on small screens to save space */
+  }
+  .detailsContent {
+    padding: 20px;
+  }
+  .specsGrid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  .contactCard {
+    padding: 25px;
+  }
+  .svgHeader {
+    aspect-ratio: 16 / 9; /* Revert to standard on mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 22px;
+  }
+  .price {
+    font-size: 20px;
+  }
+  .waButton {
+    padding: 14px;
+    font-size: 14px;
+  }
+}

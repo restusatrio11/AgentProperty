@@ -1,0 +1,8 @@
+/* src/components/PropertySVGCard.module.css */
+.cardSvg {
+  width: 100%;
+  height: 200px;
+  display: block;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  background-color: var(--color-primary-black);
+}

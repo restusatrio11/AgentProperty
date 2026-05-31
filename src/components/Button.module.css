@@ -1,0 +1,100 @@
+/* src/components/Button.module.css */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  gap: var(--space-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Variants */
+.primary {
+  background-color: var(--color-accent-gold);
+  color: var(--color-primary-black);
+  border-color: var(--color-accent-gold);
+}
+
+.primary:hover:not(:disabled) {
+  background-color: var(--color-accent-gold-hover);
+  border-color: var(--color-accent-gold-hover);
+}
+
+.secondary {
+  background-color: var(--color-primary-black);
+  color: var(--color-neutral-white);
+  border-color: var(--color-primary-black);
+}
+
+.secondary:hover:not(:disabled) {
+  background-color: var(--color-gray-800);
+  border-color: var(--color-gray-800);
+}
+
+.outlineGold {
+  background-color: transparent;
+  color: var(--color-accent-gold);
+  border-color: var(--color-accent-gold);
+}
+
+.outlineGold:hover:not(:disabled) {
+  background-color: var(--color-accent-gold);
+  color: var(--color-primary-black);
+}
+
+.outlineBlack {
+  background-color: transparent;
+  color: var(--color-primary-black);
+  border-color: var(--color-primary-black);
+}
+
+.outlineBlack:hover:not(:disabled) {
+  background-color: var(--color-primary-black);
+  color: var(--color-neutral-white);
+}
+
+.danger {
+  background-color: var(--color-accent-red);
+  color: var(--color-neutral-white);
+  border-color: var(--color-accent-red);
+}
+
+.danger:hover:not(:disabled) {
+  background-color: #922b2b;
+  border-color: #922b2b;
+}
+
+/* Sizes */
+.sm {
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--font-xs);
+}
+
+.md {
+  padding: var(--space-md) var(--space-lg);
+  font-size: var(--font-sm);
+}
+
+.lg {
+  padding: var(--space-lg) var(--space-xl);
+  font-size: var(--font-md);
+}
+
+.fullWidth {
+  width: 100%;
+}

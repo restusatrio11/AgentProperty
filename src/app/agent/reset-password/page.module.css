@@ -1,0 +1,311 @@
+/* src/app/agent/reset-password/page.module.css */
+
+.pageWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--color-primary-black, #1a1a1a);
+  padding: 20px;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+.resetCard {
+  width: 100%;
+  max-width: 440px;
+  background-color: #242424;
+  border: 1px solid rgba(201, 169, 97, 0.25);
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  padding: 32px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.brandHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+.logoIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #c9a961;
+}
+
+.logoText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+  text-align: left;
+}
+
+.logoTextMain {
+  font-size: 18px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.logoTextSub {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 3.5px;
+  color: #c9a961;
+  text-transform: uppercase;
+}
+
+.portalTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.portalSubtitle {
+  font-size: 13px;
+  color: #a0a0a0;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Alert Messages */
+.alert {
+  padding: 12px 16px;
+  border-radius: 4px;
+  font-size: 13px;
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+
+.alertDanger {
+  background-color: rgba(179, 58, 58, 0.2);
+  border: 1px solid #b33a3a;
+  color: #ff6b6b;
+}
+
+.alertSuccess {
+  background-color: rgba(27, 138, 90, 0.2);
+  border: 1px solid #1b8a5a;
+  color: #55ee99;
+}
+
+/* Reset Form */
+.resetForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.passwordFieldWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.passwordToggle {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #a0a0a0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  transition: color 0.2s;
+  z-index: 5;
+}
+
+.passwordToggle:hover {
+  color: #c9a961;
+}
+
+.inputLabel {
+  font-size: 11px;
+  font-weight: 600;
+  color: #c9a961;
+  text-transform: uppercase;
+  letter-spacing: 0.75px;
+}
+
+.inputField {
+  width: 100%;
+  padding: 12px;
+  background-color: #1a1a1a;
+  border: 1px solid #3a3a3a;
+  border-radius: 4px;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.inputField:focus {
+  outline: none;
+  border-color: #c9a961;
+  box-shadow: 0 0 0 2px rgba(201, 169, 97, 0.2);
+}
+
+.inputField:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Password Strength Meter */
+.strengthMeter {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.strengthBar {
+  width: 100%;
+  height: 6px;
+  background-color: #333333;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.strengthProgress {
+  height: 100%;
+  transition: width 0.3s ease, background-color 0.3s ease;
+  border-radius: 3px;
+}
+
+.strengthLabel {
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.strengthCriteria {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  margin-top: 6px;
+  background: #1e1e1e;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #2e2e2e;
+}
+
+.criterionItem {
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #888888;
+}
+
+.criterionActive {
+  color: #55ee99;
+}
+
+.criterionDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #555;
+  display: inline-block;
+}
+
+.criterionActive .criterionDot {
+  background-color: #55ee99;
+}
+
+/* Submit Button */
+.submitButton {
+  width: 100%;
+  padding: 14px;
+  background-color: #c9a961;
+  border: none;
+  border-radius: 4px;
+  color: #1a1a1a;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s, opacity 0.2s;
+  margin-top: 8px;
+}
+
+.submitButton:hover:not(:disabled) {
+  background-color: #bfa058;
+}
+
+.submitButton:disabled {
+  background-color: #4a4538;
+  color: #8a8578;
+  cursor: not-allowed;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(26, 26, 26, 0.3);
+  border-radius: 50%;
+  border-top-color: #1a1a1a;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Card Footer */
+.cardFooter {
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 16px;
+  margin-top: 8px;
+}
+
+.backLink {
+  color: #a0a0a0;
+  font-size: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+.backLink:hover {
+  color: #c9a961;
+}

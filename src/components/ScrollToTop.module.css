@@ -1,0 +1,43 @@
+/* src/components/ScrollToTop.module.css */
+.scrollTop {
+  position: fixed;
+  bottom: var(--space-xl);
+  right: var(--space-xl);
+  width: 45px;
+  height: 45px;
+  background-color: var(--color-accent-gold);
+  color: var(--color-primary-black);
+  border: none;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 999;
+  transition: all var(--transition-normal);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  box-shadow: var(--shadow-lg);
+}
+
+.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.scrollTop:hover {
+  background-color: var(--color-accent-gold-hover);
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-xl);
+}
+
+@media (max-width: 640px) {
+  .scrollTop {
+    bottom: var(--space-lg);
+    right: var(--space-lg);
+    width: 40px;
+    height: 40px;
+  }
+}

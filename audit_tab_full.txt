@@ -1,0 +1,201 @@
+                      className={styles.filterInput}
+                      style={{ width: "100%" }}
+                      value={auditSearch}
+                      onChange={(e) => {
+                        setAuditSearch(e.target.value);
+                        setAuditCurrentPage(1);
+                      }}
+                    />
+                  </div>
+                  
+                  <div style={{ width: "160px" }}>
+                    <select
+                      className={styles.filterInput}
+                      style={{ width: "100%" }}
+                      value={auditFilterAction}
+                      onChange={(e) => {
+                        setAuditFilterAction(e.target.value);
+                        setAuditCurrentPage(1);
+                      }}
+                    >
+                      <option value="">Semua Aksi</option>
+                      <option value="CREATE">CREATE</option>
+                      <option value="UPDATE">UPDATE</option>
+                      <option value="DELETE">DELETE</option>
+                    </select>
+                  </div>
+
+                  <div style={{ width: "160px" }}>
+                    <select
+                      className={styles.filterInput}
+                      style={{ width: "100%" }}
+                      value={auditFilterModule}
+                      onChange={(e) => {
+                        setAuditFilterModule(e.target.value);
+                        setAuditCurrentPage(1);
+                      }}
+                    >
+                      <option value="">Semua Modul</option>
+                      <option value="User">User</option>
+                      <option value="Property">Property</option>
+                      <option value="RolePermission">RolePermission</option>
+                    </select>
+                  </div>
+
+                  {(auditSearch || auditFilterAction || auditFilterModule) && (
+                    <button
+                      className={styles.btnCancel}
+                      style={{ padding: "8px 16px" }}
+                      onClick={() => {
+                        setAuditSearch("");
+                        setAuditFilterAction("");
+                        setAuditFilterModule("");
+                        setAuditCurrentPage(1);
+                      }}
+                    >
+                      Reset
+                    </button>
+                  )}
+                </div>
+
+                <div className={styles.customTableWrapper}>
+                  {sortedAuditLogs.length === 0 ? (
+                    <div className={styles.noLogs}>
+                      Tidak ada aktivitas sistem yang tercatat atau cocok dengan pencarian.
+                    </div>
+                  ) : (
+                    <table className={styles.customTable}>
+                      <thead>
+                        <tr>
+                          <th onClick={() => handleAuditSort("createdAt")} className={styles.sortHeader}>
+                            Waktu (WIB) {renderSortIcon("createdAt", auditSortField, auditSortDirection)}
+                          </th>
+                          <th onClick={() => handleAuditSort("user")} className={styles.sortHeader}>
+                            Pengguna {renderSortIcon("user", auditSortField, auditSortDirection)}
+                          </th>
+                          <th onClick={() => handleAuditSort("actionType")} className={styles.sortHeader}>
+                            Aksi {renderSortIcon("actionType", auditSortField, auditSortDirection)}
+                          </th>
+                          <th onClick={() => handleAuditSort("entityName")} className={styles.sortHeader}>
+                            Modul {renderAuditSortIcon("entityName")}
+                          </th>
+                          <th onClick={() => handleAuditSort("changeSummary")} className={styles.sortHeader}>
+                            Ringkasan Perubahan {renderSortIcon("changeSummary", auditSortField, auditSortDirection)}
+                          </th>
+                          <th onClick={() => handleAuditSort("ipAddress")} className={styles.sortHeader}>
+                            Alamat IP {renderAuditSortIcon("ipAddress")}
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {paginatedAuditLogs.map((log) => (
+                          <tr key={log.id} className={styles.customTableRow}>
+                            <td style={{ color: "#666", whiteSpace: "nowrap" }}>
+                              {new Date(log.createdAt).toLocaleString("id-ID", { timeZone: "Asia/Jakarta" })}
+                            </td>
+                            <td style={{ fontWeight: 600 }}>{log.user?.email || "System"}</td>
+                            <td>
+                              <span
+                                className={`${styles.actionBadge} ${
+                                  log.actionType === "CREATE"
+                                    ? styles.actionCreate
+                                    : log.actionType === "UPDATE"
+                                    ? styles.actionUpdate
+                                    : styles.actionDelete
+                                }`}
+                              >
+                                {log.actionType}
+                              </span>
+                            </td>
+                            <td style={{ fontWeight: 600, color: "#444" }}>{log.entityName}</td>
+                            <td style={{ color: "#1a1a1a", wordBreak: "break-all" }}>{log.changeSummary}</td>
+                            <td className={styles.ipAddress}>{log.ipAddress}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  )}
+                </div>
+
+                {sortedAuditLogs.length > 0 && (
+                  <div className={styles.customTablePagination}>
+                    <div className={styles.paginationInfo}>
+                      Menampilkan <strong>{Math.min((auditCurrentPage - 1) * auditPageSize + 1, sortedAuditLogs.length)}</strong> - <strong>{Math.min(auditCurrentPage * auditPageSize, sortedAuditLogs.length)}</strong> dari <strong>{sortedAuditLogs.length}</strong> log
+                    </div>
+                    
+                    <div className={styles.paginationControls}>
+                      <div className={styles.pageSizeSelectWrapper}>
+                        <span>Tampilkan:</span>
+                        <select
+                          className={styles.paginationPageSizeSelect}
+                          value={auditPageSize}
+                          onChange={(e) => {
+                            setAuditPageSize(Number(e.target.value));
+                            setAuditCurrentPage(1);
+                          }}
+                        >
+                          {[10, 25, 50, 100].map(size => (
+                            <option key={size} value={size}>{size}</option>
+                          ))}
+                        </select>
+                      </div>
+                      
+                      <div className={styles.paginationPages}>
+                        <button
+                          type="button"
+                          className={styles.paginationBtn}
+                          disabled={auditCurrentPage === 1}
+                          onClick={() => setAuditCurrentPage(1)}
+                        >
+                          «
+                        </button>
+                        <button
+                          type="button"
+                          className={styles.paginationBtn}
+                          disabled={auditCurrentPage === 1}
+                          onClick={() => setAuditCurrentPage(prev => Math.max(prev - 1, 1))}
+                        >
+                          ‹
+                        </button>
+                        
+                        {Array.from({ length: auditTotalPages }, (_, idx) => idx + 1)
+                          .filter(page => {
+                            return page === 1 || page === auditTotalPages || Math.abs(page - auditCurrentPage) <= 1;
+                          })
+                          .map((page, idx, arr) => {
+                            const isPrevPageDotted = idx > 0 && page - arr[idx - 1] > 1;
+                            return (
+                              <span key={page} style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                                {isPrevPageDotted && <span className={styles.paginationEllipsis}>...</span>}
+                                <button
+                                  type="button"
+                                  className={`${styles.paginationBtn} ${auditCurrentPage === page ? styles.paginationBtnActive : ""}`}
+                                  onClick={() => setAuditCurrentPage(page)}
+                                >
+                                  {page}
+                                </button>
+                              </span>
+                            );
+                          })}
+                        
+                        <button
+                          type="button"
+                          className={styles.paginationBtn}
+                          disabled={auditCurrentPage === auditTotalPages}
+                          onClick={() => setAuditCurrentPage(prev => Math.min(prev + 1, auditTotalPages))}
+                        >
+                          ›
+                        </button>
+                        <button
+                          type="button"
+                          className={styles.paginationBtn}
+                          disabled={auditCurrentPage === auditTotalPages}
+                          onClick={() => setAuditCurrentPage(auditTotalPages)}
+                        >
+                          »
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
