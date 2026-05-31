@@ -16,8 +16,8 @@ const stats = [
 
 const team = [
   {
-    name: "Restu Satrio Pinanggih",
-    role: "Direktur Utama",
+    name: "Direktur Utama Prime",
+    role: "Management",
     image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400&h=500&auto=format&fit=crop&fm=webp"
   },
   {
@@ -85,8 +85,8 @@ export default function TentangKamiPage() {
             <p className={styles.quote}>
               &ldquo;Komitmen kami adalah menghadirkan properti dengan standar kualitas tanpa kompromi, membangun hubungan jangka panjang berdasarkan integritas, dan memberikan kepuasan maksimal bagi setiap klien.&rdquo;
             </p>
-            <span className={styles.quoteAuthor}>Restu Satrio Pinanggih</span>
-            <span className={styles.quoteTitle}>Direktur Utama Prime Property</span>
+            <span className={styles.quoteAuthor}>Direktur Utama Prime</span>
+            <span className={styles.quoteTitle}>Prime Property</span>
           </ScrollReveal>
         </div>
       </section>
