@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { verifyJWT } from "@/lib/auth";
 
+export const dynamic = "force-dynamic";
+
 // Parser to turn raw User-Agent strings into friendly browser names
 function getFriendlyUserAgent(ua) {
   if (!ua) return "Perangkat Tidak Dikenal";
