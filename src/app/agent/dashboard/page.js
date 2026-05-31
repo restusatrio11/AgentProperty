@@ -4073,15 +4073,16 @@ export default function AgentDashboard() {
                     Tindakan Cepat / Quick Actions
                   </h3>
                   <div className={styles.quickActionsGrid}>
-                    <button className={styles.quickActionBtn} onClick={openCreateForm}>
-                      <Plus size={16} color="#c9a961" />
-                      Tambah Properti
-                    </button>
+                    {hasPermission(role, RESOURCES.PROPERTIES, ACTIONS.CREATE) && (
+                      <button className={styles.quickActionBtn} onClick={openCreateForm}>
+                        <Plus size={16} color="#c9a961" />
+                        Tambah Properti
+                      </button>
+                    )}
                     <button className={styles.quickActionBtn} onClick={handleExportExcel}>
                       <Download size={16} color="#c9a961" />
                       Ekspor Excel
                     </button>
-
                   </div>
                 </div>
 
