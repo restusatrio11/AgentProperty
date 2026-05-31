@@ -52,7 +52,7 @@ export const PERMISSIONS = {
   },
   [ROLES.ADMIN]: {
     [RESOURCES.PROPERTIES]: [ACTIONS.READ],
-    [RESOURCES.TESTIMONIALS]: [ACTIONS.READ, ACTIONS.UPDATE],
+    [RESOURCES.TESTIMONIALS]: [ACTIONS.READ],
     [RESOURCES.MESSAGES]: [ACTIONS.READ],
     // Admin can read their own profile maybe, but for now we follow AC
   },

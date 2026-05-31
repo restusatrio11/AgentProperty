@@ -4632,20 +4632,28 @@ export default function AgentDashboard() {
                               </td>
                               <td className={styles.actionCell}>
                                 <div style={{ display: "flex", gap: "8px", justifyContent: "center", flexWrap: "nowrap" }}>
-                                  <button 
-                                    className={`${styles.tableActionBtn} ${t.isApproved ? styles.tableActionBtnEdit : styles.tableActionBtnDetail}`}
-                                    onClick={() => handleToggleTestimonial(t.id, t.isApproved)}
-                                    title={t.isApproved ? "Sembunyikan" : "Tampilkan"}
-                                  >
-                                    {t.isApproved ? <EyeOff size={14} /> : <Eye size={14} />}
-                                  </button>
-                                  <button 
-                                    className={`${styles.tableActionBtn} ${styles.tableActionBtnDelete}`}
-                                    onClick={() => handleDeleteTestimonial(t.id)}
-                                    title="Hapus Testimoni"
-                                  >
-                                    <Trash2 size={14} />
-                                  </button>
+                                  {hasPermission(role, RESOURCES.TESTIMONIALS, ACTIONS.UPDATE) && (
+                                    <button 
+                                      className={`${styles.tableActionBtn} ${t.isApproved ? styles.tableActionBtnEdit : styles.tableActionBtnDetail}`}
+                                      onClick={() => handleToggleTestimonial(t.id, t.isApproved)}
+                                      title={t.isApproved ? "Sembunyikan" : "Tampilkan"}
+                                    >
+                                      {t.isApproved ? <EyeOff size={14} /> : <Eye size={14} />}
+                                    </button>
+                                  )}
+                                  {hasPermission(role, RESOURCES.TESTIMONIALS, ACTIONS.DELETE) && (
+                                    <button 
+                                      className={`${styles.tableActionBtn} ${styles.tableActionBtnDelete}`}
+                                      onClick={() => handleDeleteTestimonial(t.id)}
+                                      title="Hapus Testimoni"
+                                    >
+                                      <Trash2 size={14} />
+                                    </button>
+                                  )}
+                                  {!hasPermission(role, RESOURCES.TESTIMONIALS, ACTIONS.UPDATE) && 
+                                   !hasPermission(role, RESOURCES.TESTIMONIALS, ACTIONS.DELETE) && (
+                                    <span style={{ color: "#999", fontSize: "12px" }}>Hanya Lihat</span>
+                                  )}
                                 </div>
                               </td>
                             </tr>

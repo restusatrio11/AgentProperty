@@ -10,10 +10,11 @@ export async function PATCH(request, { params }) {
     const role = request.headers.get("x-user-role") || "ADMIN";
     const userId = request.headers.get("x-user-id");
 
-    // Check permission (using a general management permission or specific one if exists)
-    // For now using PROPERTIES as a proxy if TESTIMONIALS isn't in RBAC yet, 
-    // but ideally we should add TESTIMONIALS to RBAC.
-    // Let's check what's available in RESOURCES.
+    // Check permission
+    const isAllowed = await hasPermissionDb(role, RESOURCES.TESTIMONIALS, ACTIONS.UPDATE);
+    if (!isAllowed) {
+      return NextResponse.json({ error: "Forbidden: Anda tidak memiliki izin untuk memperbarui testimoni." }, { status: 403 });
+    }
     
     const body = await request.json();
     const { isApproved } = body;
@@ -50,6 +51,12 @@ export async function DELETE(request, { params }) {
     const { id } = params;
     const role = request.headers.get("x-user-role") || "ADMIN";
     const userId = request.headers.get("x-user-id");
+
+    // Check permission
+    const isAllowed = await hasPermissionDb(role, RESOURCES.TESTIMONIALS, ACTIONS.DELETE);
+    if (!isAllowed) {
+      return NextResponse.json({ error: "Forbidden: Anda tidak memiliki izin untuk menghapus testimoni." }, { status: 403 });
+    }
 
     const deleted = await prisma.testimonial.delete({
       where: { id },
