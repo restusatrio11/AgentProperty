@@ -165,3 +165,50 @@ graph TD
 3. **Penggunaan Dashboard**:
    - **Admin** menyaring data properti menggunakan filter multi-select AG-Grid untuk kebutuhan presentasi ke klien.
    - **Superadmin** mengelola data listing (tambah, edit, hapus) serta memantau log audit dan akun agen lainnya.
+
+### Diagram Sekuensial Keamanan & Otorisasi API
+
+#### 1. Percobaan Tindakan Terlarang (Admin mencoba Menghapus Data)
+```mermaid
+sequenceDiagram
+    actor Admin
+    participant FE as Browser (Frontend UI)
+    participant MW as Next.js Middleware
+    participant API as Route Handler (Backend API)
+    participant DB as Database (PostgreSQL)
+
+    Admin->>FE: Paksa kirim request (misal: DELETE /api/properties/123)
+    FE->>MW: Kirim Request DELETE dengan Cookie Sesi
+    MW->>DB: Validasi token sesi aktif
+    DB-->>MW: Sesi Valid (User Role = ADMIN)
+    MW->>MW: Petakan rute (DELETE /properties) ke izin (PROPERTIES:DELETE)
+    MW->>MW: Cek hasPermission("ADMIN", "properties", "delete")
+    Note over MW: Izin Ditolak!
+    MW-->>FE: Return HTTP 403 Forbidden (Akses Ditolak)
+    FE-->>Admin: Tampilkan Toast Notifikasi Kesalahan / Akses Ditolak
+```
+
+#### 2. Tindakan Diizinkan (Superadmin membuat Properti Baru)
+```mermaid
+sequenceDiagram
+    actor Superadmin
+    participant FE as Browser (Frontend UI)
+    participant MW as Next.js Middleware
+    participant API as Route Handler (Backend API)
+    participant DB as Database (PostgreSQL)
+
+    Superadmin->>FE: Isi Form & Klik "Simpan Properti"
+    FE->>MW: POST /api/properties (Data Form + Cookie Sesi)
+    MW->>DB: Validasi token sesi aktif
+    DB-->>MW: Sesi Valid (User Role = SUPERADMIN)
+    MW->>MW: Petakan rute (POST /properties) ke izin (PROPERTIES:CREATE)
+    MW->>MW: Cek hasPermission("SUPERADMIN", "properties", "create")
+    Note over MW: Izin Diberikan!
+    MW->>API: Teruskan request dengan header x-user-role: SUPERADMIN
+    API->>DB: Simpan data properti baru
+    DB-->>API: Properti berhasil disimpan
+    API->>DB: Catat aktivitas di tabel audit_logs (Action: CREATE)
+    DB-->>API: Audit Log berhasil disimpan
+    API-->>FE: Return HTTP 201 Created (Data Properti + Sukses)
+    FE-->>Superadmin: Tampilkan Toast Sukses & Perbarui Tabel Grid
+```
