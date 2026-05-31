@@ -1,9 +1,12 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 
 export default function SmoothScroll({ children }) {
+  const pathname = usePathname();
+
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
@@ -16,6 +19,11 @@ export default function SmoothScroll({ children }) {
       touchMultiplier: 2,
     });
 
+    // Reset scroll position and resize on route change
+    window.scrollTo(0, 0);
+    lenis.scrollTo(0, { immediate: true });
+    lenis.resize();
+
     function raf(time) {
       lenis.raf(time);
       requestAnimationFrame(raf);
@@ -23,10 +31,16 @@ export default function SmoothScroll({ children }) {
 
     requestAnimationFrame(raf);
 
+    // Timeout to ensure Next.js has completed rendering before calculating size
+    const resizeTimeout = setTimeout(() => {
+      lenis.resize();
+    }, 150);
+
     return () => {
+      clearTimeout(resizeTimeout);
       lenis.destroy();
     };
-  }, []);
+  }, [pathname]);
 
   return <>{children}</>;
 }
