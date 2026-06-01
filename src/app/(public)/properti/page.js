@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import PropertyListingClient from "./PropertyListingClient";
 
 export const metadata = {
@@ -13,6 +13,12 @@ export const metadata = {
 
 export default function PropertyListingPage() {
   return (
-    <PropertyListingClient />
+    <Suspense fallback={
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh", color: "#666" }}>
+        Memuat Katalog Properti...
+      </div>
+    }>
+      <PropertyListingClient />
+    </Suspense>
   );
 }

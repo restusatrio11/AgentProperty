@@ -68,6 +68,7 @@ export default function PropertyListingClient() {
   const [loading, setLoading] = useState(true);
   const [viewMode, setViewMode] = useState("grid"); // grid, list, map
   const [currentPage, setCurrentPage] = useState(1);
+  const [mounted, setMounted] = useState(false);
   const pageSize = 9;
   const [filters, setFilters] = useState({
     search: searchParams.get("search") || "",
@@ -78,6 +79,7 @@ export default function PropertyListingClient() {
   });
 
   useEffect(() => {
+    setMounted(true);
     const fetchProperties = async () => {
       setLoading(true);
       try {
@@ -334,7 +336,7 @@ export default function PropertyListingClient() {
             </motion.div>
           ) : (
             <motion.div key="map" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} className={styles.mapWrapper}>
-               {typeof window !== "undefined" && (
+               {mounted && (
                  <MapContainer center={[3.5952, 98.6722]} zoom={12} className={styles.leafletContainer}>
                    <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution='&copy; OpenStreetMap' />
                    {filteredProperties.map(p => (

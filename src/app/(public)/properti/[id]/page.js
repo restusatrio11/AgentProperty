@@ -1,31 +1,11 @@
 import React from "react";
-import dynamic from "next/dynamic";
 import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { MessageCircle, MapPin, Ruler, Layers, Navigation, Home, CheckCircle2, ChevronLeft } from "lucide-react";
 import PropertySVGCard from "@/components/PropertySVGCard";
 import styles from "./page.module.css";
-
-// Dynamically import Leaflet with SSR disabled
-const MapContainer = dynamic(() => import("react-leaflet").then((mod) => mod.MapContainer), { ssr: false });
-const TileLayer = dynamic(() => import("react-leaflet").then((mod) => mod.TileLayer), { ssr: false });
-const Marker = dynamic(() => import("react-leaflet").then((mod) => mod.Marker), { ssr: false });
-const Popup = dynamic(() => import("react-leaflet").then((mod) => mod.Popup), { ssr: false });
-
-// Leaflet CSS
-import "leaflet/dist/leaflet.css";
-
-// Fix for Leaflet default icon issues in React/Next.js
-if (typeof window !== "undefined") {
-  const L = require("leaflet");
-  delete L.Icon.Default.prototype._getIconUrl;
-  L.Icon.Default.mergeOptions({
-    iconRetinaUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png",
-    iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
-    shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
-  });
-}
+import DetailMap from "@/components/DetailMap";
 
 // Formatter for Indonesian Rupiah
 const formatPrice = (price) => {
@@ -221,25 +201,12 @@ export default async function PropertyDetailPage({ params }) {
           <div className={styles.locationSection}>
             <h2 className={styles.sectionTitle}>Lokasi Properti</h2>
             <div className={styles.mapWrapper}>
-               {typeof window !== "undefined" && (
-                 <MapContainer 
-                   center={[property.lat || 3.5952, property.lng || 98.6722]} 
-                   zoom={15} 
-                   style={{ height: "100%", width: "100%" }}
-                   scrollWheelZoom={false}
-                 >
-                   <TileLayer
-                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                     attribution='&copy; OpenStreetMap contributors'
-                   />
-                   <Marker position={[property.lat || 3.5952, property.lng || 98.6722]}>
-                     <Popup>
-                       <strong>{property.namaProperti}</strong><br />
-                       {kawasanArray.join(", ")}
-                     </Popup>
-                   </Marker>
-                 </MapContainer>
-               )}
+              <DetailMap 
+                lat={property.lat} 
+                lng={property.lng} 
+                namaProperti={property.namaProperti} 
+                kawasan={kawasanArray.join(", ")} 
+              />
             </div>
             {property.mapsLink && (
               <div style={{ marginTop: "15px", textAlign: "right" }}>
