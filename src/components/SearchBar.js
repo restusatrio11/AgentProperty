@@ -5,7 +5,7 @@ import { Search, MapPin, Home, DollarSign } from "lucide-react";
 import styles from "./SearchBar.module.css";
 import { useRouter } from "next/navigation";
 
-const SearchBar = () => {
+const SearchBar = ({ kawasans = [] }) => {
   const router = useRouter();
   const [filters, setFilters] = useState({
     lokasi: "",
@@ -35,9 +35,9 @@ const SearchBar = () => {
             <label>Lokasi</label>
             <select name="lokasi" value={filters.lokasi} onChange={handleChange}>
               <option value="">Semua Lokasi</option>
-              <option value="Medan">Medan</option>
-              <option value="Deli Serdang">Deli Serdang</option>
-              <option value="Jakarta">Jakarta</option>
+              {kawasans.map(k => (
+                <option key={k} value={k}>{k}</option>
+              ))}
             </select>
           </div>
         </div>

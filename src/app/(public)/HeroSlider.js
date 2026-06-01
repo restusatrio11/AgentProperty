@@ -19,7 +19,7 @@ const slides = [
   "https://images.unsplash.com/photo-1576941089067-2de3c901e126?q=80&w=1600&fm=webp"
 ];
 
-export default function HeroSlider() {
+export default function HeroSlider({ kawasans }) {
   const [current, setCurrent] = useState(0);
 
   useEffect(() => {
@@ -63,7 +63,7 @@ export default function HeroSlider() {
               dan nilai investasi yang terus meningkat. Layanan profesional khusus untuk kenyamanan Anda.
             </p>
 
-            <SearchBar />
+            <SearchBar kawasans={kawasans} />
           </div>
         </ScrollReveal>
       </div>

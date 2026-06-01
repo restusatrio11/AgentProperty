@@ -253,6 +253,21 @@ export default function PropertyListingClient() {
             <option value="sold_out">Terjual</option>
           </select>
         </div>
+
+        <div className={styles.filterGroup}>
+          <label className={styles.label}>Harga</label>
+          <select 
+            className={styles.select}
+            value={filters.harga}
+            onChange={(e) => setFilters({...filters, harga: e.target.value})}
+          >
+            <option value="Semua">Semua Harga</option>
+            <option value="0-1M">&lt; 1 Miliar</option>
+            <option value="1M-2M">1 - 2 Miliar</option>
+            <option value="2M-5M">2 - 5 Miliar</option>
+            <option value="5M+">&gt; 5 Miliar</option>
+          </select>
+        </div>
       </section>
 
       <div className={styles.resultsInfo}>
@@ -290,7 +305,7 @@ export default function PropertyListingClient() {
               ) : (
                 <div className={styles.noResults}>
                   <h3>Tidak ditemukan properti yang cocok.</h3>
-                  <button onClick={() => setFilters({search: "", tipe: "Semua", kawasan: "Semua", status: "Semua"})} style={{ marginTop: "20px", color: "#c9a961", background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}>Reset Filter</button>
+                  <button onClick={() => setFilters({search: "", tipe: "Semua", kawasan: "Semua", status: "Semua", harga: "Semua"})} style={{ marginTop: "20px", color: "#c9a961", background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}>Reset Filter</button>
                 </div>
               )}
             </motion.div>

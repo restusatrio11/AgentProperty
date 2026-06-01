@@ -161,6 +161,48 @@ export default async function HomePage() {
     console.error("Gagal mengambil data properti dari database, menggunakan data mock:", error);
   }
 
+  // Get unique kawasans from DB or fallback to mock properties
+  let allKawasans = [];
+  try {
+    const rawKawasans = await prisma.property.findMany({
+      where: { deletedAt: null },
+      select: { kawasan: true }
+    });
+    const set = new Set();
+    rawKawasans.forEach(p => {
+      try {
+        const parsed = JSON.parse(p.kawasan);
+        if (Array.isArray(parsed)) {
+          parsed.forEach(k => set.add(k));
+        } else {
+          set.add(parsed);
+        }
+      } catch (e) {
+        set.add(p.kawasan);
+      }
+    });
+    allKawasans = Array.from(set).sort();
+  } catch (error) {
+    console.error("Gagal mengambil daftar kawasan dari DB:", error);
+  }
+
+  if (allKawasans.length === 0) {
+    const set = new Set();
+    mockProperties.forEach(p => {
+      try {
+        const parsed = JSON.parse(p.kawasan);
+        if (Array.isArray(parsed)) {
+          parsed.forEach(k => set.add(k));
+        } else {
+          set.add(parsed);
+        }
+      } catch (e) {
+        set.add(p.kawasan);
+      }
+    });
+    allKawasans = Array.from(set).sort();
+  }
+
   // Choose DB properties if available and non-empty, otherwise use fallback mock data
   const rawProperties = dbProperties.length > 0 ? dbProperties : mockProperties;
   
@@ -192,7 +234,7 @@ export default async function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       {/* Hero Section with Cinematic Slider */}
-      <HeroSlider />
+      <HeroSlider kawasans={allKawasans} />
 
       {/* Property Highlight Section */}
       <section className={styles.section} style={{ position: "relative", zIndex: 20, backgroundColor: "white" }}>
